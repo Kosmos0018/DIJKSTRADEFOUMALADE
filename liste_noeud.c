@@ -12,6 +12,11 @@ struct liste_noeud_t{
 
 liste_noeud_t* creer_liste(){
     liste_noeud_t* sentinelle = (liste_noeud_t *) malloc(sizeof(liste_noeud_t));
+    coord_t noeud = creer_coord(-1,-1);
+    float dist = INFINITY;
+    sentinelle->noeud = noeud;
+    sentinelle->prec = noeud;
+    sentinelle->dist = dist;
     sentinelle->cellule_suivante = NULL;
     return sentinelle;
 }
@@ -25,7 +30,15 @@ void detruire_liste(liste_noeud_t** liste_ptr){
 }
 
 bool est_vide_liste(const liste_noeud_t* liste){
-    return (liste->cellule_suivante == NULL);
+    return (liste->dist == INFINITY);
+}
+
+int taille(liste_noeud_t* liste){
+    if (est_vide_liste(liste)){
+        return 0;
+    } else {
+        return 1 + taille(liste->cellule_suivante);
+    }
 }
 
 bool contient_noeud_liste(const liste_noeud_t* liste, coord_t noeud){
