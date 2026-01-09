@@ -6,11 +6,10 @@
 #include <assert.h>
 
 grille_t creer_grille(int largeur, int profondeur){
-    float * tableau_hauteur = (float *) calloc(largeur * profondeur, sizeof(float));
     grille_t grille;
     grille.largeur = largeur;
     grille.profondeur = profondeur;
-    grille.tableau_hauteur = tableau_hauteur;
+    grille.tableau_hauteur = (float*) calloc(largeur * profondeur, sizeof(float));
     return grille;
 }
 
@@ -33,11 +32,11 @@ int get_profondeur(grille_t grille){
 }
 
 coord_t inferieur_gauche(grille_t grille){
-    return creer_coord(0,grille.profondeur - 1);
+    return creer_coord(0,0);
 }
 
 coord_t superieur_droit(grille_t grille){
-    return creer_coord(grille.largeur - 1, 0);
+    return creer_coord(grille.largeur - 1, grille.profondeur - 1);
 }
 
 /**

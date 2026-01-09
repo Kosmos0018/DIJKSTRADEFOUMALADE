@@ -1,5 +1,5 @@
 #include "dijkstra.h"
-/*#include "animation.h"*/
+#include "animation.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -70,8 +70,9 @@ float dijkstra(
     /* D1 */
     liste_noeud_t* A_Visiter = creer_liste();
     liste_noeud_t* Visites = creer_liste();
+    float cout_chemin;
     inserer_noeud_liste(A_Visiter, source, source, 0.0);
-
+    
     /* D2 */
     while (!est_vide_liste(A_Visiter)){
         // D2.1 // 
@@ -95,7 +96,7 @@ float dijkstra(
                 float delta_prime = cout_noeud_liste(Visites, noeud_courant) + cout(grille, noeud_courant, voisins[i]);
                 
                 // D2.4.2 //
-                float delta = cout_noeud_liste(Visites, voisins[i]);
+                float delta = cout_noeud_liste(A_Visiter, voisins[i]);
 
                 // D2.4.3 //
                 if (delta_prime < delta){
@@ -106,11 +107,17 @@ float dijkstra(
         free(voisins);
     }
     /* Partie C */
-    construire_chemin_vers(*chemin, Visites, source, destination);
-    float cout_chemin = cout_noeud_liste(Visites,destination);
+    if (chemin != NULL){
+        *chemin = creer_liste();
+        construire_chemin_vers(*chemin, Visites, source, destination);
+        cout_chemin = cout_noeud_liste(Visites,destination);
+        
+    } else {
+        cout_chemin = 0.0;
+    }
+    
     detruire_liste(&A_Visiter);
     detruire_liste(&Visites);
-
     return cout_chemin;
 }
 
